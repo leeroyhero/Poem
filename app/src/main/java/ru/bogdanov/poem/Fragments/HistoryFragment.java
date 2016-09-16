@@ -11,6 +11,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TabHost;
 import android.widget.TextView;
@@ -30,6 +32,8 @@ ArrayList<String> poemList;
     SQLiteDatabase sqLiteDatabase;
     ListView listView;
     ArrayAdapter<String> adapter;
+    Button buttonAddPoem;
+    LinearLayout linearLayoutAttention;
 
     public HistoryFragment() {
         // Required empty public constructor
@@ -48,13 +52,26 @@ ArrayList<String> poemList;
         super.onStart();
         dbHelper=new DBHelper(getActivity());
         sqLiteDatabase=dbHelper.getReadableDatabase();
-
+        buttonAddPoem=(Button) getActivity().findViewById(R.id.buttonAddPoem);
+        buttonAddPoem.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                getFragmentManager().beginTransaction()
+                        .replace(R.id.fragmentContentLayout,new WelcomeFragment())
+                        .commit();
+                TabHost tabHost=(TabHost) getActivity().findViewById(R.id.tabHost);
+                tabHost.setCurrentTab(2);
+            }
+        });
 
         fiilListView();
     }
 
     private void fiilListView() {
         poemList=new ArrayList<>(dbHelper.getPoemArray(sqLiteDatabase));
+        linearLayoutAttention=(LinearLayout) getActivity().findViewById(R.id.linearLayoutAttention);
+        if (poemList.size()!=0){
+            linearLayoutAttention.setVisibility(View.INVISIBLE);
         listView=(ListView) getActivity().findViewById(R.id.listView);
         adapter=new ArrayAdapter<String>(getActivity(),R.layout.item_poem,R.id.textViewItem,poemList);
         listView.setAdapter(adapter);
@@ -66,7 +83,6 @@ ArrayList<String> poemList;
                 Storage.setPoemText(poemText);
                 getFragmentManager().beginTransaction()
                         .replace(R.id.fragmentContentLayout,new PoemFragment())
-                        .addToBackStack(null)
                         .commit();
                 TabHost tabHost=(TabHost) getActivity().findViewById(R.id.tabHost);
                 tabHost.setCurrentTab(1);
@@ -77,7 +93,7 @@ ArrayList<String> poemList;
             public boolean onItemLongClick(AdapterView<?> adapterView, View view, int i, long l) {
                 TextView textView=(TextView) view.findViewById(R.id.textViewItem);
                 final String poemText=textView.getText().toString();
-                new AlertDialog.Builder(getActivity())
+                AlertDialog alertDialog=new AlertDialog.Builder(getActivity())
                         .setTitle(R.string.delete_poem)
                         .setPositiveButton(R.string.delete, new DialogInterface.OnClickListener() {
                             @Override
@@ -88,8 +104,11 @@ ArrayList<String> poemList;
                         })
                         .setNegativeButton(R.string.back,null)
                         .show();
+                alertDialog.getButton(AlertDialog.BUTTON_POSITIVE).setTextColor(getResources().getColor(R.color.blackText));
+                alertDialog.getButton(AlertDialog.BUTTON_NEGATIVE).setTextColor(getResources().getColor(R.color.blackText));
                 return true;
             }
         });
+    }else linearLayoutAttention.setVisibility(View.VISIBLE);
     }
 }

@@ -11,19 +11,26 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerVertical="true"
-        android:layout_centerHorizontal="true">
+        android:layout_centerHorizontal="true"
+        android:gravity="center"
+        android:paddingLeft="@dimen/activity_horizontal_margin"
+        android:paddingRight="@dimen/activity_horizontal_margin">
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceMedium"
-            android:text="Medium Text"
-            android:id="@+id/textView" />
+            android:text="@string/welcome_text"
+            android:id="@+id/textView"
+            android:gravity="center"
+            android:layout_marginBottom="16dp" />
 
         <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="New Button"
-            android:id="@+id/buttonPastePoem" />
+            android:text="@string/download"
+            android:id="@+id/buttonPastePoem"
+            android:textColor="#ffffff"
+            android:backgroundTint="@color/colorPrimary" />
     </LinearLayout>
 </RelativeLayout>

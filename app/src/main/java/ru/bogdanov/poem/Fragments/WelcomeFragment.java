@@ -56,18 +56,22 @@ Button buttonPaste;
             pasteData = pasteData.trim();
             pasteData = pasteData.replaceAll("\n", " \n ");
 
-            Storage.setPoemText(pasteData);
+
             DBHelper dbHelper = new DBHelper(getActivity());
             SQLiteDatabase db = dbHelper.getReadableDatabase();
-            dbHelper.addToDB(db, pasteData);
+            if (dbHelper.getPoemArray(db).contains(pasteData))
+                Toast.makeText(getActivity(),"df",Toast.LENGTH_SHORT).show();
+            else {
+                dbHelper.addToDB(db, pasteData);
+                Storage.setPoemText(pasteData);
 
-            TabHost tabHost = (TabHost) getActivity().findViewById(R.id.tabHost);
-            tabHost.setCurrentTab(1);
+                TabHost tabHost = (TabHost) getActivity().findViewById(R.id.tabHost);
+                tabHost.setCurrentTab(1);
 
-            this.getFragmentManager().beginTransaction()
-                    .replace(R.id.fragmentContentLayout, new PoemFragment())
-                    .addToBackStack(null)
-                    .commit();
-        }else Toast.makeText(getActivity(),"sgsgsgsg",Toast.LENGTH_SHORT).show();
+                this.getFragmentManager().beginTransaction()
+                        .replace(R.id.fragmentContentLayout, new PoemFragment())
+                        .commit();
+            }
+        }else Toast.makeText(getActivity(),getString(R.string.copy_text),Toast.LENGTH_SHORT).show();
     }
 }

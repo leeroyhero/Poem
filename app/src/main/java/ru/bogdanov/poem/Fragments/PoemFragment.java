@@ -24,20 +24,6 @@ public class PoemFragment extends Fragment implements View.OnClickListener{
 Button buttonEasier, buttonRefresh, buttonHarder;
     TextView textViewTop,textViewPoemText;
     SeekBar seekBar;
-    String sampleText="В дверях эдема ангел нежный\n" +
-            "Главой поникшею сиял,\n" +
-            "А демон мрачный и мятежный\n" +
-            "Над адской бездною летал.\n" +
-            "\n" +
-            "Дух отрицанья, дух сомненья\n" +
-            "На духа чистого взирал\n" +
-            "И жар невольный умиленья\n" +
-            "Впервые смутно познавал.\n" +
-            "\n" +
-            "\"Прости,- он рек,- тебя я видел,\n" +
-            "И ты недаром мне сиял:\n" +
-            "Не все я в небе ненавидел,\n" +
-            "Не все я в мире презирал\". ";
 
     public PoemFragment() {
         // Required empty public constructor

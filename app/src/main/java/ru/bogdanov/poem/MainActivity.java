@@ -1,12 +1,12 @@
 package ru.bogdanov.poem;
 
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.widget.TabHost;
+import android.widget.TextView;
 
 import ru.bogdanov.poem.Fragments.HistoryFragment;
 import ru.bogdanov.poem.Fragments.PoemFragment;
@@ -22,7 +22,9 @@ public class MainActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
 
         addTabHost();
+        if (Storage.getPoemText().equals(""))
         startFragment(new HistoryFragment());
+        else startFragment(new PoemFragment());
     }
 
     private void addTabHost() {
@@ -66,29 +68,13 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         });
-    }
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_main, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
+        for(int i=0;i<tabHost.getTabWidget().getChildCount();i++)
+        {
+            TextView tv = (TextView) tabHost.getTabWidget().getChildAt(i).findViewById(android.R.id.title);
+            tv.setTextColor(Color.parseColor("#FFFFFF"));
         }
-
-        return super.onOptionsItemSelected(item);
     }
+
 
     public void startFragment(Fragment fragment){
         getSupportFragmentManager().beginTransaction()

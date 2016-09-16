@@ -114,7 +114,7 @@ public class DBHelper extends SQLiteOpenHelper{
     public ArrayList<String> getPoemArray(SQLiteDatabase db){
         ArrayList<String> list=new ArrayList<>();
         Cursor cursor=db.query(DBNamespace.TABLE_NAME,new String[]{DBNamespace.POEM_NAME},null,null,null,null,null);
-        cursor.moveToFirst();
+        if (cursor.moveToFirst())
         do {
             String text=cursor.getString(cursor.getColumnIndex(DBNamespace.POEM_NAME));
             list.add(text);
