@@ -10,7 +10,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 
-import ru.bogdanov.poem.Fragments.WelcomeFragment;
+import ru.bogdanov.poem.Fragments.PoemFragment;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -29,7 +29,7 @@ public class MainActivity extends AppCompatActivity {
                         .setAction("Action", null).show();
             }
         });
-        startFragment(new WelcomeFragment());
+        startFragment(new PoemFragment());
     }
 
     @Override
