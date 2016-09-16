@@ -1,16 +1,16 @@
 package ru.bogdanov.poem;
 
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
+import android.widget.TabHost;
 
+import ru.bogdanov.poem.Fragments.HistoryFragment;
 import ru.bogdanov.poem.Fragments.PoemFragment;
+import ru.bogdanov.poem.Fragments.WelcomeFragment;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -21,15 +21,51 @@ public class MainActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
+        addTabHost();
+        startFragment(new HistoryFragment());
+    }
+
+    private void addTabHost() {
+        TabHost tabHost = (TabHost) findViewById(R.id.tabHost);
+
+        tabHost.setup();
+
+        TabHost.TabSpec tabSpec = tabHost.newTabSpec("tag1");
+
+        tabSpec.setContent(R.id.linearLayout3);
+        tabSpec.setIndicator(getString(R.string.history));
+        tabHost.addTab(tabSpec);
+
+        tabSpec = tabHost.newTabSpec("tag2");
+        tabSpec.setContent(R.id.linearLayout4);
+        tabSpec.setIndicator(getString(R.string.poem));
+        tabHost.addTab(tabSpec);
+
+        tabSpec = tabHost.newTabSpec("tag3");
+        tabSpec.setContent(R.id.linearLayout5);
+        tabSpec.setIndicator(getString(R.string.add));
+        tabHost.addTab(tabSpec);
+
+        tabHost.setCurrentTab(0);
+        tabHost.setOnTabChangedListener(new TabHost.OnTabChangeListener() {
             @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
+            public void onTabChanged(String s) {
+                switch (s){
+                    case "tag1":{
+                        startFragment(new HistoryFragment());
+                        break;
+                    }
+                    case "tag2":{
+                        startFragment(new PoemFragment());
+                        break;
+                    }
+                    case "tag3":{
+                        startFragment(new WelcomeFragment());
+                        break;
+                    }
+                }
             }
         });
-        startFragment(new PoemFragment());
     }
 
     @Override

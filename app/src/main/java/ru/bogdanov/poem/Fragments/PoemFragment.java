@@ -15,6 +15,7 @@ import java.util.Arrays;
 import java.util.Random;
 
 import ru.bogdanov.poem.R;
+import ru.bogdanov.poem.Storage;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -66,7 +67,7 @@ Button buttonEasier, buttonRefresh, buttonHarder;
         seekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar seekBar, int i, boolean b) {
-                morphPoem(sampleText);
+                morphPoem(Storage.getPoemText());
             }
 
             @Override
@@ -79,15 +80,14 @@ Button buttonEasier, buttonRefresh, buttonHarder;
 
             }
         });
-
-
+        morphPoem(Storage.getPoemText());
     }
 
     @Override
     public void onClick(View view) {
         switch (view.getId()){
             case R.id.buttonPoemRefresh :{
-                morphPoem(sampleText);
+                morphPoem(Storage.getPoemText());
                 break;
             }
             case R.id.buttonPoemEasier:{
@@ -107,8 +107,6 @@ Button buttonEasier, buttonRefresh, buttonHarder;
     }
 
     private void morphPoem(String text){
-        text=text.replaceAll("\n"," \n");
-
         String[] words=text.split(" ");
         int leng=words.length;
         int morphDiff=seekBar.getProgress();

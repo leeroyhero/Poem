@@ -8,5 +8,13 @@
     <string name="harder">Сложнее</string>
     <string name="refresh">Обновить</string>
     <string name="difficult">Сложность</string>
+    <string name="delete_poem">Удалить стих?</string>
+    <string name="delete">Удалить</string>
+    <string name="back">Назад</string>
+
+    <string name="history">История</string>
+    <string name="add">Добавить</string>
+    <string name="poem">Стих</string>
+
 
 </resources>

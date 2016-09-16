@@ -11,6 +11,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.TabHost;
+import android.widget.Toast;
 
 import ru.bogdanov.poem.DB.DBHelper;
 import ru.bogdanov.poem.R;
@@ -48,18 +50,24 @@ Button buttonPaste;
 
     private void pasteText(){
         ClipboardManager clipboard = (ClipboardManager) getActivity().getSystemService(Context.CLIPBOARD_SERVICE);
-        ClipData.Item item = clipboard.getPrimaryClip().getItemAt(0);
-        String pasteData = item.getText().toString();
-        pasteData=pasteData.trim();
+        if (clipboard.hasPrimaryClip()) {
+            ClipData.Item item = clipboard.getPrimaryClip().getItemAt(0);
+            String pasteData = item.getText().toString();
+            pasteData = pasteData.trim();
+            pasteData = pasteData.replaceAll("\n", " \n ");
 
-        Storage.setPoemText(pasteData);
-        DBHelper dbHelper=new DBHelper(getActivity());
-        SQLiteDatabase db=dbHelper.getReadableDatabase();
-        dbHelper.addToDB(db,pasteData);
+            Storage.setPoemText(pasteData);
+            DBHelper dbHelper = new DBHelper(getActivity());
+            SQLiteDatabase db = dbHelper.getReadableDatabase();
+            dbHelper.addToDB(db, pasteData);
 
-        this.getFragmentManager().beginTransaction()
-                .replace(R.id.fragmentContentLayout,new PoemFragment())
-                .addToBackStack(null)
-                .commit();
+            TabHost tabHost = (TabHost) getActivity().findViewById(R.id.tabHost);
+            tabHost.setCurrentTab(1);
+
+            this.getFragmentManager().beginTransaction()
+                    .replace(R.id.fragmentContentLayout, new PoemFragment())
+                    .addToBackStack(null)
+                    .commit();
+        }else Toast.makeText(getActivity(),"sgsgsgsg",Toast.LENGTH_SHORT).show();
     }
 }
