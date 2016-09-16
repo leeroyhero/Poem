@@ -1,0 +1,25 @@
+<resources>
+    <string name="app_name">Учим стихи</string>
+
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="easier">Легче</string>
+    <string name="harder">Сложнее</string>
+    <string name="refresh">Обновить</string>
+    <string name="difficult">Сложность</string>
+    <string name="delete_poem">Удалить стих?</string>
+    <string name="delete">Удалить</string>
+    <string name="back">Назад</string>
+
+    <string name="history">История</string>
+    <string name="add">Добавить</string>
+    <string name="poem">Стих</string>
+    <string name="download">Скачать</string>
+    <string name="welcome_text">Скопируйте из любого браузера стихотворение или текст который вы хотите выучить, и нажмите на кнопку ниже.</string>
+
+    <string name="text_not_added">Текст не выбран</string>
+    <string name="add_poem">Добавить текст</string>
+    <string name="copy_text">Скопируйте текст</string>
+    <string name="poem_list_empty">Не добавлено ни одного стихотворения</string>
+    <string name="this_poem_added">Этот текст уже добавлен</string>
+
+</resources>

@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.SeekBar;
 import android.widget.TextView;
 
@@ -92,26 +93,33 @@ Button buttonEasier, buttonRefresh, buttonHarder;
         seekBar.setProgress(pos+i);
     }
 
-    private void morphPoem(String text){
-        String[] words=text.split(" ");
-        int leng=words.length;
-        int morphDiff=seekBar.getProgress();
-        int hideWords=leng*morphDiff/100;
-        Random random=new Random();
-        ArrayList<Integer> morphList=new ArrayList<>();
-        for (int i=0;i<hideWords;i++){
-            do{
-                int current=random.nextInt(leng);
-                if (!morphList.contains(current)){
-                    if (!words[current].contains("\n")){
-                    morphList.add(current);
-                    words[current]=words[current].replaceAll("(?s).", "*");
-                   break;}
-                }
-            }while (true);
+    private void morphPoem(String text) {
+        LinearLayout linearLayoutAttention = (LinearLayout) getActivity().findViewById(R.id.linearLayoutAttentionPoem);
+        if (text.equals(""))
+            linearLayoutAttention.setVisibility(View.VISIBLE);
+        else {
+            linearLayoutAttention.setVisibility(View.INVISIBLE);
+            String[] words = text.split(" ");
+            int leng = words.length;
+            int morphDiff = seekBar.getProgress();
+            int hideWords = leng * morphDiff / 100;
+            Random random = new Random();
+            ArrayList<Integer> morphList = new ArrayList<>();
+            for (int i = 0; i < hideWords; i++) {
+                do {
+                    int current = random.nextInt(leng);
+                    if (!morphList.contains(current)) {
+                        if (!words[current].contains("\n")) {
+                            morphList.add(current);
+                            words[current] = words[current].replaceAll("(?s).", "*");
+                            break;
+                        }
+                    }
+                } while (true);
+            }
+            String morphString = Arrays.toString(words);
+            morphString = morphString.substring(1, morphString.length() - 1).replaceAll(",", "");
+            textViewPoemText.setText(morphString);
         }
-        String morphString= Arrays.toString(words);
-       morphString = morphString.substring(1, morphString.length()-1).replaceAll(",", "");
-        textViewPoemText.setText(morphString);
     }
 }

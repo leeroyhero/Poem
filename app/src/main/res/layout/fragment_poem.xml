@@ -106,10 +106,35 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textAppearance="?android:attr/textAppearanceMedium"
-                android:text="Medium Text"
+                android:text=""
                 android:id="@+id/textViewPoemText"
                 android:textColor="#000000" />
         </LinearLayout>
     </ScrollView>
+
+    <LinearLayout
+        android:id="@+id/linearLayoutAttentionPoem"
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/relativeLayout"
+        android:layout_above="@+id/linearLayout2"
+        android:gravity="center">
+
+        <ImageView
+            android:layout_width="@dimen/img_side"
+            android:layout_height="@dimen/img_side"
+            android:id="@+id/imageView3"
+            android:src="@drawable/book"
+            android:layout_marginBottom="16dp"
+            android:alpha="0.75" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:text="@string/text_not_added"
+            android:id="@+id/textView3" />
+    </LinearLayout>
 
 </RelativeLayout>

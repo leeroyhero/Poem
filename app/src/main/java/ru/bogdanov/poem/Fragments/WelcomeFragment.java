@@ -60,7 +60,7 @@ Button buttonPaste;
             DBHelper dbHelper = new DBHelper(getActivity());
             SQLiteDatabase db = dbHelper.getReadableDatabase();
             if (dbHelper.getPoemArray(db).contains(pasteData))
-                Toast.makeText(getActivity(),"df",Toast.LENGTH_SHORT).show();
+                Toast.makeText(getActivity(),getString(R.string.this_poem_added),Toast.LENGTH_SHORT).show();
             else {
                 dbHelper.addToDB(db, pasteData);
                 Storage.setPoemText(pasteData);

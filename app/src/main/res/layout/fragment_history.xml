@@ -44,8 +44,8 @@
         android:paddingRight="@dimen/activity_horizontal_margin">
 
         <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="@dimen/img_side"
+            android:layout_height="@dimen/img_side"
             android:id="@+id/imageView2"
             android:src="@drawable/book"
             android:layout_marginBottom="16dp"

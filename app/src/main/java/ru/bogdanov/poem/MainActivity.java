@@ -13,7 +13,7 @@ import ru.bogdanov.poem.Fragments.PoemFragment;
 import ru.bogdanov.poem.Fragments.WelcomeFragment;
 
 public class MainActivity extends AppCompatActivity {
-
+    TabHost tabHost;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -22,13 +22,17 @@ public class MainActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
 
         addTabHost();
-        if (Storage.getPoemText().equals(""))
+        if (Storage.getPoemText().equals("")){
         startFragment(new HistoryFragment());
-        else startFragment(new PoemFragment());
+            tabHost.setCurrentTab(0);
+        }
+        else {startFragment(new PoemFragment());
+            tabHost.setCurrentTab(1);
+        }
     }
 
     private void addTabHost() {
-        TabHost tabHost = (TabHost) findViewById(R.id.tabHost);
+        tabHost = (TabHost) findViewById(R.id.tabHost);
 
         tabHost.setup();
 
