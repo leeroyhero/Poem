@@ -19,7 +19,8 @@
             android:text="@string/add_poem"
             android:id="@+id/buttonAddPoem"
             android:textColor="#ffffff"
-            android:backgroundTint="@color/colorPrimary" />
+            android:backgroundTint="@color/colorPrimary"
+            android:background="@color/colorPrimary" />
     </LinearLayout>
 
     <ListView

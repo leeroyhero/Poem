@@ -1,19 +1,25 @@
 package ru.bogdanov.poem;
 
-import android.graphics.Color;
 import android.os.Bundle;
+import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.widget.TabHost;
-import android.widget.TextView;
 
 import ru.bogdanov.poem.Fragments.HistoryFragment;
 import ru.bogdanov.poem.Fragments.PoemFragment;
 import ru.bogdanov.poem.Fragments.WelcomeFragment;
 
 public class MainActivity extends AppCompatActivity {
-    TabHost tabHost;
+
+
+
+    MyAdapter mAdapter;
+    ViewPager mPager;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -21,68 +27,48 @@ public class MainActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        addTabHost();
-        if (Storage.getPoemText().equals("")){
-        startFragment(new HistoryFragment());
-            tabHost.setCurrentTab(0);
-        }
-        else {startFragment(new PoemFragment());
-            tabHost.setCurrentTab(1);
-        }
+
+
+        mPager=(ViewPager) findViewById(R.id.viewPager);
+        mAdapter=new MyAdapter(getSupportFragmentManager());
+        mPager.setAdapter(mAdapter);
+        TabLayout tabLayout=(TabLayout) findViewById(R.id.tabLayout);
+        tabLayout.setupWithViewPager(mPager);
     }
 
-    private void addTabHost() {
-        tabHost = (TabHost) findViewById(R.id.tabHost);
 
-        tabHost.setup();
 
-        TabHost.TabSpec tabSpec = tabHost.newTabSpec("tag1");
 
-        tabSpec.setContent(R.id.linearLayout3);
-        tabSpec.setIndicator(getString(R.string.history));
-        tabHost.addTab(tabSpec);
+    class MyAdapter extends FragmentPagerAdapter {
+        public MyAdapter(FragmentManager fm) {
+            super(fm);
+        }
 
-        tabSpec = tabHost.newTabSpec("tag2");
-        tabSpec.setContent(R.id.linearLayout4);
-        tabSpec.setIndicator(getString(R.string.poem));
-        tabHost.addTab(tabSpec);
+        @Override
+        public int getCount() {
+            return 3;
+        }
 
-        tabSpec = tabHost.newTabSpec("tag3");
-        tabSpec.setContent(R.id.linearLayout5);
-        tabSpec.setIndicator(getString(R.string.add));
-        tabHost.addTab(tabSpec);
-
-        tabHost.setCurrentTab(0);
-        tabHost.setOnTabChangedListener(new TabHost.OnTabChangeListener() {
-            @Override
-            public void onTabChanged(String s) {
-                switch (s){
-                    case "tag1":{
-                        startFragment(new HistoryFragment());
-                        break;
-                    }
-                    case "tag2":{
-                        startFragment(new PoemFragment());
-                        break;
-                    }
-                    case "tag3":{
-                        startFragment(new WelcomeFragment());
-                        break;
-                    }
-                }
+        @Override
+        public Fragment getItem(int position) {
+            switch (position){
+                case 0: return new HistoryFragment();
+                case 1: return new PoemFragment();
+                case 2: return new WelcomeFragment();
+                default:return null;
             }
-        });
-        for(int i=0;i<tabHost.getTabWidget().getChildCount();i++)
-        {
-            TextView tv = (TextView) tabHost.getTabWidget().getChildAt(i).findViewById(android.R.id.title);
-            tv.setTextColor(Color.parseColor("#FFFFFF"));
+        }
+
+        @Override
+        public CharSequence getPageTitle(int position) {
+            switch (position){
+                case 0: return getString(R.string.history);
+                case 1: return getString(R.string.poem);
+                case 2: return getString(R.string.add);
+                default: return null;
+            }
         }
     }
 
 
-    public void startFragment(Fragment fragment){
-        getSupportFragmentManager().beginTransaction()
-                .replace(R.id.fragmentContentLayout,fragment)
-                .commit();
-    }
 }

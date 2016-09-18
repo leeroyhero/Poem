@@ -4,6 +4,7 @@ package ru.bogdanov.poem.Fragments;
 import android.content.DialogInterface;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
+import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AlertDialog;
 import android.view.LayoutInflater;
@@ -14,7 +15,6 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.ListView;
-import android.widget.TabHost;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -56,11 +56,9 @@ ArrayList<String> poemList;
         buttonAddPoem.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                getFragmentManager().beginTransaction()
-                        .replace(R.id.fragmentContentLayout,new WelcomeFragment())
-                        .commit();
-                TabHost tabHost=(TabHost) getActivity().findViewById(R.id.tabHost);
-                tabHost.setCurrentTab(2);
+                TabLayout tabLayout = (TabLayout) getActivity().findViewById(R.id.tabLayout);
+                TabLayout.Tab tab = tabLayout.getTabAt(2);
+                tab.select();
             }
         });
 
@@ -81,11 +79,9 @@ ArrayList<String> poemList;
                 TextView textView=(TextView) view.findViewById(R.id.textViewItem);
                 String poemText=textView.getText().toString();
                 Storage.setPoemText(poemText);
-                getFragmentManager().beginTransaction()
-                        .replace(R.id.fragmentContentLayout,new PoemFragment())
-                        .commit();
-                TabHost tabHost=(TabHost) getActivity().findViewById(R.id.tabHost);
-                tabHost.setCurrentTab(1);
+                TabLayout tabLayout = (TabLayout) getActivity().findViewById(R.id.tabLayout);
+                TabLayout.Tab tab = tabLayout.getTabAt(1);
+                tab.select();
             }
         });
         listView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {

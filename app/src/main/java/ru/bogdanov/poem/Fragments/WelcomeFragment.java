@@ -6,12 +6,12 @@ import android.content.ClipboardManager;
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
+import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.TabHost;
 import android.widget.Toast;
 
 import ru.bogdanov.poem.DB.DBHelper;
@@ -65,12 +65,9 @@ Button buttonPaste;
                 dbHelper.addToDB(db, pasteData);
                 Storage.setPoemText(pasteData);
 
-                TabHost tabHost = (TabHost) getActivity().findViewById(R.id.tabHost);
-                tabHost.setCurrentTab(1);
-
-                this.getFragmentManager().beginTransaction()
-                        .replace(R.id.fragmentContentLayout, new PoemFragment())
-                        .commit();
+                TabLayout tabLayout = (TabLayout) getActivity().findViewById(R.id.tabLayout);
+                TabLayout.Tab tab = tabLayout.getTabAt(1);
+                tab.select();
             }
         }else Toast.makeText(getActivity(),getString(R.string.copy_text),Toast.LENGTH_SHORT).show();
     }

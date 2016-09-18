@@ -67,6 +67,12 @@ Button buttonEasier, buttonRefresh, buttonHarder;
 
             }
         });
+
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
         morphPoem(Storage.getPoemText());
     }
 
