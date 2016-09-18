@@ -1,10 +1,13 @@
 package ru.bogdanov.poem;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.os.PersistableBundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.content.LocalBroadcastManager;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -27,15 +30,49 @@ public class MainActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-
-
         mPager=(ViewPager) findViewById(R.id.viewPager);
         mAdapter=new MyAdapter(getSupportFragmentManager());
         mPager.setAdapter(mAdapter);
         TabLayout tabLayout=(TabLayout) findViewById(R.id.tabLayout);
         tabLayout.setupWithViewPager(mPager);
+        tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
+            @Override
+            public void onTabSelected(TabLayout.Tab tab) {
+                mPager.setCurrentItem(tab.getPosition());
+                if (tab.getPosition() == 1) {
+
+                    LocalBroadcastManager lbm = LocalBroadcastManager.getInstance(getApplicationContext());
+                    Intent i = new Intent("TAG_REFRESH");
+                    lbm.sendBroadcast(i);
+
+                }
+            }
+
+            @Override
+            public void onTabUnselected(TabLayout.Tab tab) {
+
+            }
+
+            @Override
+            public void onTabReselected(TabLayout.Tab tab) {
+
+            }
+        });
     }
 
+    @Override
+    public void onSaveInstanceState(Bundle outState, PersistableBundle outPersistentState) {
+        super.onSaveInstanceState(outState, outPersistentState);
+        outState.putInt("id_fragment", mPager.getCurrentItem());
+    }
+
+    @Override
+    protected void onRestoreInstanceState(Bundle savedInstanceState) {
+        super.onRestoreInstanceState(savedInstanceState);
+        TabLayout tabLayout = (TabLayout) findViewById(R.id.tabLayout);
+        TabLayout.Tab tab = tabLayout.getTabAt(savedInstanceState.getInt("id_fragment"));
+        tab.select();
+    }
 
 
 
@@ -43,6 +80,7 @@ public class MainActivity extends AppCompatActivity {
         public MyAdapter(FragmentManager fm) {
             super(fm);
         }
+
 
         @Override
         public int getCount() {

@@ -1,8 +1,13 @@
 package ru.bogdanov.poem.Fragments;
 
 
+import android.content.BroadcastReceiver;
+import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.content.LocalBroadcastManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -25,6 +30,7 @@ public class PoemFragment extends Fragment implements View.OnClickListener{
 Button buttonEasier, buttonRefresh, buttonHarder;
     TextView textViewTop,textViewPoemText;
     SeekBar seekBar;
+    MyReceiver receiver;
 
     public PoemFragment() {
         // Required empty public constructor
@@ -68,12 +74,6 @@ Button buttonEasier, buttonRefresh, buttonHarder;
             }
         });
 
-    }
-
-    @Override
-    public void onResume() {
-        super.onResume();
-        morphPoem(Storage.getPoemText());
     }
 
     @Override
@@ -126,6 +126,27 @@ Button buttonEasier, buttonRefresh, buttonHarder;
             String morphString = Arrays.toString(words);
             morphString = morphString.substring(1, morphString.length() - 1).replaceAll(",", "");
             textViewPoemText.setText(morphString);
+        }
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        LocalBroadcastManager.getInstance(getActivity()).unregisterReceiver(receiver);
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        receiver = new MyReceiver();
+        LocalBroadcastManager.getInstance(getActivity()).registerReceiver(receiver, new IntentFilter("TAG_REFRESH"));
+    }
+
+
+    private class MyReceiver extends BroadcastReceiver {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            PoemFragment.this.morphPoem(Storage.getPoemText());
         }
     }
 }

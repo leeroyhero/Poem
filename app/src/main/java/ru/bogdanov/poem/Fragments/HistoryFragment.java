@@ -68,9 +68,9 @@ ArrayList<String> poemList;
     private void fiilListView() {
         poemList=new ArrayList<>(dbHelper.getPoemArray(sqLiteDatabase));
         linearLayoutAttention=(LinearLayout) getActivity().findViewById(R.id.linearLayoutAttention);
+        listView=(ListView) getActivity().findViewById(R.id.listView);
         if (poemList.size()!=0){
             linearLayoutAttention.setVisibility(View.INVISIBLE);
-        listView=(ListView) getActivity().findViewById(R.id.listView);
         adapter=new ArrayAdapter<String>(getActivity(),R.layout.item_poem,R.id.textViewItem,poemList);
         listView.setAdapter(adapter);
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -105,6 +105,9 @@ ArrayList<String> poemList;
                 return true;
             }
         });
-    }else linearLayoutAttention.setVisibility(View.VISIBLE);
+    }else {
+            linearLayoutAttention.setVisibility(View.VISIBLE);
+            listView.setAdapter(null);
+        }
     }
 }
